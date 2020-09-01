@@ -29,6 +29,15 @@ app.post('/notes/new', (req, res) => {
     res.json({ success : true })
 })
 
+app.delete('/notes/delete/:id', (req, res) => {
+    const note = req.params
+    db.get("notes").remove({
+        id: note.id
+    }).write()
+    res.json({ success : true })
+})
+
+
 app.listen(PORT, ()=>{
     console.log(`Backend is running on http://localhost:${PORT}`)
 })
