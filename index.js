@@ -29,7 +29,7 @@ app.post('/notes/new', (req, res) => {
     res.json({ success : true })
 })
 
-app.delete('/notes/delete/:id', (req, res) => {
+app.delete('/notes/:id', (req, res) => {
     const note = req.params
     db.get("notes").remove({
         id: note.id
@@ -37,6 +37,16 @@ app.delete('/notes/delete/:id', (req, res) => {
     res.json({ success : true })
 })
 
+app.patch('/notes/:id', (req, res) => {
+    const note = req.params
+    const newNote = req.body
+    db.get("notes").find({
+        id: note.id
+    }).assign({
+        text: newNote.text
+    }).write()
+    res.json({ success: true })
+})
 
 app.listen(PORT, ()=>{
     console.log(`Backend is running on http://localhost:${PORT}`)
